@@ -15,6 +15,13 @@
       "when": 1767875399904,
       "tag": "0001_swift_firelord",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1767877572331,
+      "tag": "0002_mute_mister_fear",
+      "breakpoints": true
     }
   ]
 }
