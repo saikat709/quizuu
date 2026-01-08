@@ -36,9 +36,6 @@ export const quiz = pgTable('quiz', {
 		.notNull()
 		.references(() => user.id),
 	title: text('title').notNull(),
-	yt_url: text('yt_url').notNull(),
-	level: text('level').notNull(),
-
 	createdAt: timestamp('created_at', { withTimezone: true, mode: 'date' }).notNull(),
 	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'date' }).notNull()
 });
@@ -51,7 +48,6 @@ export const question = pgTable('question', {
 	question: text('question').notNull(),
 	options: text('options').notNull(),
 	answer_inx: integer('answer_inx').notNull(), // 0 based index
-
 	createdAt: timestamp('created_at', { withTimezone: true, mode: 'date' }).notNull(),
 	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'date' }).notNull()
 });

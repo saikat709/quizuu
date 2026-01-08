@@ -64,7 +64,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 
     // Add quizzes to groups
     for (const q of quizzes) {
-        const url = q.yt_url || 'unknown'; // Quizzes might not have yt_url if created manually or old schema?
+        const url = 'unknown'; // Quizzes might not have yt_url if created manually or old schema?
         if (url === 'unknown') continue; // Skip or handle separately? For now group by URL.
 
         if (!groups[url]) {
@@ -119,8 +119,8 @@ export const actions: Actions = {
             id: quizId,
             userId: locals.user.id,
             title: `Quiz from ${url}`, // simple title
-            yt_url: url,
-            level: 'beginner', // default level for now
+            // yt_url: url,
+            // level: 'beginner', // default level for now
             createdAt: new Date(),
             updatedAt: new Date()
         });

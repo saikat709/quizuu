@@ -1,11 +1,15 @@
 <script lang="ts">
-  import { PlusOutline, VideoCameraOutline, FileLinesOutline, BrainOutline, SpinnerSolid, DownloadOutline, ExternalLinkOutline } from 'flowbite-svelte-icons';
+  import { PlusOutline, VideoCameraOutline, FileLinesOutline, BrainOutline, DownloadOutline } from 'flowbite-svelte-icons';
+  import { Spinner } from "flowbite-svelte";
+
   import { fade, fly } from 'svelte/transition';
   import Button from '$lib/components/ui/Button.svelte';
   import Input from '$lib/components/ui/Input.svelte';
   import Modal from '$lib/components/ui/Modal.svelte';
 
-  let { data, form } = $props();
+  import { enhance } from '$app/forms'; 
+
+  let { data } = $props();
 
   let isNewModalOpen = $state(false);
   let isTranscribing = $state(false);
@@ -111,13 +115,26 @@
             method="POST" 
             action="?/transcribe" 
             use:enhance={() => {
+                console.log('enhance');
                 isTranscribing = true;
                 return async ({ result }) => {
+                    console.log('result', result);
                     isTranscribing = false;
-                    if (result.type === 'success' && result.data) {
-                        transcriptionResult = { 
-                            text: result.data.transcription, 
-                            url: result.data.url 
+
+                    if (result.type !== 'success') return;
+
+                    type Data = {
+                        transcription: string;
+                        url: string;
+                        success: boolean;
+                    };
+
+                    const data = result.data as Data;
+
+                    if (data.success) {
+                        transcriptionResult = {
+                            text: data.transcription || "No transcription",
+                            url: data.url || "No URL"
                         };
                     }
                 };
@@ -132,7 +149,7 @@
             />
             <Button type="submit" class="w-full" disabled={isTranscribing}>
                 {#if isTranscribing}
-                    <SpinnerSolid class="mr-2 h-4 w-4 animate-spin" /> Transcribing Video...
+                    <Spinner class="mr-2 h-4 w-4" /> Transcribing Video...
                 {:else}
                     <BrainOutline class="mr-2 h-4 w-4" /> Start Magic
                 {/if}
@@ -146,16 +163,32 @@
             </div>
             
             <div class="grid grid-cols-2 gap-4">
-                 <form method="POST" action="?/createQuiz" use:enhance>
+                 <form 
+                    method="POST" 
+                    action="?/createQuiz" 
+                    use:enhance={() => {
+                        console.log('enhance create quiz');
+                        return async ({ result }) => {
+                            console.log('result create quiz', result);
+                        };
+                    }}>
                     <input type="hidden" name="url" value={transcriptionResult.url} />
                     <input type="hidden" name="text" value={transcriptionResult.text} />
                     <Button type="submit" variant="outline" class="w-full h-24 flex-col gap-2 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-900/20">
                         <BrainOutline size="lg" class="text-indigo-600" />
-                        Generate Quiz
+                          Generate Quiz
                     </Button>
                  </form>
 
-                 <form method="POST" action="?/createNote" use:enhance>
+                 <form 
+                    method="POST" 
+                    action="?/createNote" 
+                    use:enhance={() => {
+                        console.log('enhance create note');
+                        return async ({ result }) => {
+                            console.log('result create note', result);
+                        };
+                    }}>
                     <input type="hidden" name="url" value={transcriptionResult.url} />
                     <input type="hidden" name="text" value={transcriptionResult.text} />
                     <Button type="submit" variant="outline" class="w-full h-24 flex-col gap-2 hover:border-purple-500 hover:bg-purple-50 dark:hover:bg-purple-900/20">

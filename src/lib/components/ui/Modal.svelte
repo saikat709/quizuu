@@ -6,9 +6,9 @@
   let { 
     open = $bindable(false), 
     title, 
-    description,
+    description = undefined,
     children, 
-    class: className 
+    class: className = undefined
   } = $props();
 
   function close() {

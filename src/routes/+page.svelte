@@ -1,8 +1,9 @@
 <script lang="ts">
   import Button from '$lib/components/ui/Button.svelte';
   import { ArrowRightOutline, BookOpenOutline, BrainOutline, WandMagicSparklesOutline } from 'flowbite-svelte-icons';
+  import type { User } from '$lib/server/db/schema';
 
-  let { data } = $props();
+  let { data } : { data: { user: User | null } } = $props();
 </script>
 
 <div class="relative overflow-hidden pt-16 pb-32">
