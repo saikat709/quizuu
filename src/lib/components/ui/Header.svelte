@@ -2,7 +2,7 @@
     import { page } from '$app/stores';
     import Button from './Button.svelte';
     import { WandMagicSparklesOutline, BarsOutline, CloseOutline } from 'flowbite-svelte-icons';
-    import { fade, slide } from 'svelte/transition';
+    import { slide } from 'svelte/transition';
 
     let { user } = $props();
     let isMenuOpen = $state(false);
@@ -19,7 +19,7 @@
                 <WandMagicSparklesOutline size="sm" />
             </div>
             <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent dark:from-white dark:to-gray-300">
-                QuizGen
+                YourClass
             </span>
         </a>
 
@@ -31,6 +31,9 @@
 
         <div class="hidden md:flex items-center gap-4">
             {#if user}
+                {#if user.role === 'admin'}
+                    <a href="/admin" class="text-sm font-bold text-purple-600 hover:text-purple-700 dark:text-purple-400">Admin</a>
+                {/if}
                 <a href="/dashboard" class="text-sm font-medium text-gray-700 hover:text-indigo-600 dark:text-gray-300">Dashboard</a>
                 <span class="text-sm text-gray-400">|</span>
                 <span class="text-sm font-medium text-gray-900 dark:text-white">{user.username}</span>
@@ -60,6 +63,9 @@
                 <a href="/pricing" class="text-base font-medium text-gray-600" onclick={toggleMenu}>Pricing</a>
                 <hr class="border-gray-100 dark:border-gray-800" />
                 {#if user}
+                     {#if user.role === 'admin'}
+                        <a href="/admin" class="text-base font-bold text-purple-600" onclick={toggleMenu}>Admin Panel</a>
+                     {/if}
                      <a href="/dashboard" class="text-base font-medium text-gray-600" onclick={toggleMenu}>Dashboard</a>
                      <form action="/auth?/logout" method="POST" class="w-full">
                         <button type="submit" class="text-base font-medium text-red-500 hover:text-red-700 w-full text-left">Logout</button>

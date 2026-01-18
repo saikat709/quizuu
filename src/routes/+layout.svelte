@@ -10,7 +10,7 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<title>QuizGen - AI Powered Notes & Quizzes</title>
+	<title>YourClass - AI Powered Notes & Quizzes</title>
 </svelte:head>
 
 <div class="flex min-h-screen flex-col bg-gray-50 text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-50">

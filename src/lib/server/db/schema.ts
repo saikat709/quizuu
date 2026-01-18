@@ -1,11 +1,12 @@
 import { pgTable, serial, integer, text, timestamp } from 'drizzle-orm/pg-core';
-//  quiz, questions, results, answers -> queiz have questions, results have answers, users have results, asnwers
+// quiz, questions, results, answers -> queiz have questions, results have answers, users have results, asnwers
 
 export const user = pgTable('user', {
 	id: text('id').primaryKey(),
 	age: integer('age'),
 	username: text('username').notNull().unique(),
-	passwordHash: text('password_hash').notNull()
+	passwordHash: text('password_hash').notNull(),
+	role: text('role').notNull().default('user')
 });
 
 export const session = pgTable('session', {
@@ -36,6 +37,7 @@ export const quiz = pgTable('quiz', {
 		.notNull()
 		.references(() => user.id),
 	title: text('title').notNull(),
+	yt_url: text('yt_url'),
 	createdAt: timestamp('created_at', { withTimezone: true, mode: 'date' }).notNull(),
 	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'date' }).notNull()
 });
@@ -80,5 +82,38 @@ export const answer = pgTable('answer', {
 	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'date' }).notNull()
 });
 
+export const pricingPackage = pgTable('pricing_package', {
+	id: text('id').primaryKey(),
+	name: text('name').notNull(),
+	description: text('description').notNull(),
+	monthlyPrice: integer('monthly_price').notNull(),
+	annualPrice: integer('annual_price').notNull(),
+	features: text('features').notNull(), // Comma-separated or JSON string
+	isPopular: integer('is_popular').notNull().default(0), // 0 or 1
+	createdAt: timestamp('created_at', { withTimezone: true, mode: 'date' }).notNull(),
+	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'date' }).notNull()
+});
+
+export const playlist = pgTable('playlist', {
+	id: text('id').primaryKey(),
+	userId: text('user_id')
+		.notNull()
+		.references(() => user.id),
+	title: text('title').notNull(),
+	description: text('description'),
+	createdAt: timestamp('created_at', { withTimezone: true, mode: 'date' }).notNull(),
+	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'date' }).notNull()
+});
+
+export const playlistClass = pgTable('playlist_class', {
+	playlistId: text('playlist_id')
+		.notNull()
+		.references(() => playlist.id),
+	ytUrl: text('yt_url').notNull(),
+	createdAt: timestamp('created_at', { withTimezone: true, mode: 'date' }).notNull()
+});
+
 export type Session = typeof session.$inferSelect;
 export type User = typeof user.$inferSelect;
+export type PricingPackage = typeof pricingPackage.$inferSelect;
+export type Playlist = typeof playlist.$inferSelect;

@@ -6,9 +6,9 @@
     <div class="container mx-auto px-4 py-8 md:py-12">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div class="space-y-4">
-                <span class="text-lg font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">QuizGen</span>
+                <span class="text-lg font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">YourClass</span>
                 <p class="text-sm text-gray-500 leading-relaxed">
-                    Instantly generate quizzes and notes from your content using advanced AI.
+                    AI Powered Notes & Quizzes
                 </p>
             </div>
             
@@ -41,7 +41,7 @@
         
         <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
             <p class="text-sm text-gray-500">
-                © {currentYear} QuizGen. All rights reserved.
+                © {currentYear} YourClass. All rights reserved.
             </p>
         </div>
     </div>
